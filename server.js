@@ -8,6 +8,10 @@ app.get('/', async (req, res) => {
    res.send('Here is the first GET route')
 })
 
+app.post('/quotes', (req, res) => {
+   console.log('Hellooooooooooooooooo!')
+ })
+
 // const connection= mysql.createConnection({
 //    host:'127.0.0.1',
 //    port: '3306',
@@ -36,8 +40,6 @@ app.patch('/user1', (req, res)=> {
 app.delete('/user', (req, res)=> {
    res.send('Got a delete request at /user')
 })
-
-
 
 
 module.exports = app
