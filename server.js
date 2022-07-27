@@ -8,26 +8,6 @@ app.get('/', async (req, res) => {
    res.send('Here is the first GET route')
 })
 
-app.post('/quotes', (req, res) => {
-   console.log('Hellooooooooooooooooo!')
- })
-
-// const connection= mysql.createConnection({
-//    host:'127.0.0.1',
-//    port: '3306',
-//    user: 'root',
-//    password: 'passw0rd',
-//    database: 'test'
-// })
-// connection.connect()
-
-// connection.query(
-//    "SELECT * FROM `branch` WHERE `branch_name` = 'Stamford'",
-//    function(error, result, fs){
-//       console.log({error,result});
-//    }
-// );
-
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 
@@ -40,6 +20,7 @@ app.patch('/user1', (req, res)=> {
 app.delete('/user', (req, res)=> {
    res.send('Got a delete request at /user')
 })
+
 
 
 module.exports = app
