@@ -11,15 +11,15 @@ app.get('/', async (req, res) => {
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 
-app.post('/user', (req, res)=> {
-   res.send(req.body.Text)
-})
-app.patch('/user1', (req, res)=> {
-   res.send('Got a patch request at /user')
-})
-app.delete('/user', (req, res)=> {
-   res.send('Got a delete request at /user')
-})
+// app.post('/user', (req, res)=> {
+//    res.send(req.body.Text)
+// })
+// app.patch('/user1', (req, res)=> {
+//    res.send('Got a patch request at /user')
+// })
+// app.delete('/user', (req, res)=> {
+//    res.send('Got a delete request at /user')
+// })
 
 
 

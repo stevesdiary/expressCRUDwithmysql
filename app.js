@@ -1,4 +1,3 @@
-const { main } = require('process');
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
@@ -6,20 +5,38 @@ const application = require('./server');
 const mysql = require('mysql2');
 dotenv.config();
 
+require('dotenv').config();
+
+// console.log({ server_port: process.env.PORT })
 const connection= mysql.createConnection({
-   host:'127.0.0.1',
+   host:process.env.HOST,
    port: process.env.PORT,
-   user: 'root',
-   password: 'passw0rd',
-   database: 'test'
+   user: process.env.USERNAME,
+   password: process.env.PASSWORD,
+   database: process.env.DATABASE
 })
 
 connection.connect((err)=>{
    if (err) throw err;
    console.log('Connected to MYSQL server!')
 });
+
 app.use('/', application)
 
+app.post('/create', function(req, res){
+   const body = req.body
+   const query = "INSERT INTO `bio` (`name`, `number`) VALUES('" + body.name + "', '" + body.number + "')"
+   console.log({body, query})
+connection.query(
+
+   query,
+   function(error, result, fs){
+
+      console.log(error, result)
+      res.send(result != null ? 'Success' : 'fail')
+   }
+);
+})
 
 app.get('/readAll', function(req, res){
    const queryAll = "SELECT * FROM `bio`"
@@ -45,24 +62,8 @@ connection.query(
 );
 })
 
-app.post('/create', function(req, res){
-   const body = req.body
-   const query = "INSERT INTO `bio` (`name`, `number`) VALUES('" + body.name + "', '" + body.number + "')"
-   console.log({body, query})
-connection.query(
-
-   query,
-   // "SELECT `client`.`client_name` ?AS `Non_Employee_Entities`, `client`.`branch_id` AS `Branch_ID` FROM `client` UNION SELECT `branch_supplier`.`supplier_name`, `branch_supplier`.`branch_id` FROM `branch_supplier` LIMIT 2",
-   function(error, result, fs){
-
-      console.log(error, result)
-      res.send(result != null ? 'Success' : 'fail')
-   }
-);
-})
 app.patch('/update', function(req, res){
    const body = req.body
-   // const query = "UPDATE `bio` (`name`, `number`) = ('" + body.name + "', '" + body.number + "') WHERE (`name`, `number`)"
    const query = `
       UPDATE bio
       SET name = '${body.name}'
@@ -70,7 +71,6 @@ app.patch('/update', function(req, res){
    `
 connection.query(
    query,
-   // "UPDATE `bio` SET `name` = 'ADEOLU', `number` = '112233' WHERE `name` = 'ADEBAYO'",
    function(error, result, fs){
       console.log(result != null ? 'Success' : 'fail')
       // console.log(error)
@@ -95,7 +95,4 @@ connection.query(
 
 app.listen(3000, function(){
    console.log('Server listening on port 3000')
-})
-
-
-
+});
