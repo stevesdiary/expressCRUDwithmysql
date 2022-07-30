@@ -1,9 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
 
-// module.exports= async function application(app, opts){
 app.get('/', async (req, res) => {
    res.send('Here is the first GET route')
 })
